@@ -1,4 +1,4 @@
-# keras 
+# keras
 from keras.models import Sequential
 from keras.utils import np_utils, generic_utils
 from keras.optimizers import RMSprop, SGD
@@ -9,7 +9,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from myutils import *
 
 class Autoencoder(object):
-	def __init__(self, n_in, n_hid, 
+	def __init__(self, n_in, n_hid,
 		lr=1e-2, l2reg=3e-6, corruption_level=0.3, act='sigmoid'):
 		self.lr = lr
 		self.l2reg = l2reg
@@ -18,11 +18,11 @@ class Autoencoder(object):
 		self.ae = Sequential()
 
 		encoder = Sequential()
-		encoder.add(Dense(n_in, n_hid, init='uniform', W_regularizer=l2(l2reg)))
+		encoder.add(Dense(input_dim = n_in, output_dim = n_hid, init='uniform', W_regularizer=l2(l2reg)))
 		encoder.add(Activation(act))
 
 		decoder = Sequential()
-		decoder.add(Dense(n_hid, n_in, init='uniform', W_regularizer=l2(l2reg)))
+		decoder.add(Dense(input_dim = n_hid, output_dim = n_in, init='uniform', W_regularizer=l2(l2reg)))
 		decoder.add(Activation(act))
 
 		self.ae.add(AutoEncoder(encoder=encoder, decoder=decoder,
@@ -80,6 +80,3 @@ class Autoencoder(object):
 				# Reconstruct input
 				Xr = self.ae.predict(Xs)
 				show_images(Xr, grayscale=True, filename=recon_imgfile)
-
-
-
